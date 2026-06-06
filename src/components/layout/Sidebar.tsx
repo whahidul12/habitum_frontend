@@ -64,7 +64,7 @@ export default function Sidebar() {
             <Sparkles size={18} />
           </div>
           <div className="font-semibold text-lg tracking-tight">
-            AI Habit Tracker
+            Habitum
           </div>
         </div>
       </div>
