@@ -18,10 +18,7 @@ import LoadingSpinner from "@components/ui/LoadingSpinner";
 import { CATEGORIES } from "@utils/constants";
 import { streakFromKeys } from "@utils/dateHelpers";
 import { format, subDays } from "date-fns";
-import type {
-  Habit,
-  HabitCreatePayload,
-} from "@features/habits/types/habits.types";
+import type { Habit, HabitCreatePayload } from "@features/habits/types/habits.types";
 import type { HabitLog } from "@features/habitLogs/types/habitLogs.types";
 import type { HabitSuggestion } from "@features/aiInsight/types/aiInsight.types";
 import AIChat from "@/features/aiInsight/components/AIChat";
@@ -73,6 +70,8 @@ export default function Habits() {
     load();
   }, []);
 
+  const [catOpen, setCatOpen] = useState(false);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return habits.filter((h) => {
@@ -92,9 +91,7 @@ export default function Habits() {
     try {
       if (editing) {
         const res = await api.put<Habit>(`/habits/${editing._id}`, data);
-        setHabits((hs) =>
-          hs.map((h) => (h._id === res.data._id ? res.data : h)),
-        );
+        setHabits((hs) => hs.map((h) => (h._id === res.data._id ? res.data : h)));
       } else {
         const res = await api.post<Habit>("/habits", data);
         setHabits((hs) => [...hs, res.data]);
@@ -135,9 +132,9 @@ export default function Habits() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
+          <h1 className="text-2xl md:text-3xl text-center font-semibold tracking-tight">
             All habits
           </h1>
           <p className="text-sm text-muted mt-0.5">
@@ -145,12 +142,9 @@ export default function Habits() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            className="btn-secondary"
-            onClick={() => setSuggestOpen(true)}
-          >
+          <button className="btn-secondary" onClick={() => setSuggestOpen(true)}>
             <Sparkles size={14} />
-            <span className="hidden sm:inline">Suggest a habit</span>
+            <span>Suggestion</span>
           </button>
           <button
             className="btn-primary"
@@ -165,7 +159,7 @@ export default function Habits() {
         </div>
       </div>
 
-      <div className="card p-4">
+      <div className="card p-4 relative z-20">
         <div className="flex flex-col md:flex-row gap-3 md:items-center">
           <div className="relative flex-1">
             <Search
@@ -179,33 +173,71 @@ export default function Habits() {
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
-          <select
-            className="input md:w-52"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="All">All categories</option>
-            {CATEGORIES.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
-          <div className="inline-flex rounded-xl glass overflow-hidden text-sm">
+          <div className="relative md:w-52">
+            <button
+              type="button"
+              className="input text-left flex items-center justify-between cursor-pointer"
+              onClick={() => setCatOpen(!catOpen)}
+            >
+              <span>{category === "All" ? "All categories" : category}</span>
+              <span className="text-xs text-faint">▼</span>
+            </button>
+            {catOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setCatOpen(false)} />
+                <div className="absolute top-full left-0 right-0 mt-1.5 z-50 rounded-xl bg-white dark:bg-[rgb(41,38,33)] overflow-hidden shadow-lg py-1 animate-fade-in">
+                  <button
+                    type="button"
+                    className={`w-full text-left px-3.5 py-2.5 text-sm transition hover:bg-(--surface-hover) ${
+                      category === "All"
+                        ? "text-brand-500 font-medium bg-brand-500/10"
+                        : "text-soft"
+                    }`}
+                    onClick={() => {
+                      setCategory("All");
+                      setCatOpen(false);
+                    }}
+                  >
+                    All categories
+                  </button>
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      className={`w-full text-left px-3.5 py-2.5 text-sm transition hover:bg-(--surface-hover) ${
+                        category === c
+                          ? "text-brand-500 font-medium bg-brand-500/10"
+                          : "text-soft"
+                      }`}
+                      onClick={() => {
+                        setCategory(c);
+                        setCatOpen(false);
+                      }}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="flex justify-between rounded-xl glass overflow-hidden text-sm">
             <button
               onClick={() => setShowArchived(false)}
-              className={`px-3.5 py-2.5 font-medium transition ${
+              className={`px-3.5 py-2.5 font-medium transition w-1/2 md:w-auto ${
                 !showArchived
                   ? "bg-brand-500/15 text-brand-700 dark:text-brand-300"
-                  : "text-soft hover:bg-[var(--surface-hover)]"
+                  : "text-soft hover:bg-(--surface-hover)"
               }`}
             >
               Active · {activeCount}
             </button>
             <button
               onClick={() => setShowArchived(true)}
-              className={`px-3.5 py-2.5 font-medium transition border-l divider ${
+              className={`px-3.5 py-2.5 font-medium transition border-l divider w-1/2 md:w-auto ${
                 showArchived
                   ? "bg-brand-500/15 text-brand-700 dark:text-brand-300"
-                  : "text-soft hover:bg-[var(--surface-hover)]"
+                  : "text-soft hover:bg-(--surface-hover)"
               }`}
             >
               Archived · {archivedCount}
@@ -232,10 +264,7 @@ export default function Habits() {
                 : "Try clearing your search or category filter."}
           </div>
           {!showArchived && habits.length === 0 && (
-            <button
-              className="btn-primary mt-4"
-              onClick={() => setFormOpen(true)}
-            >
+            <button className="btn-primary mt-4" onClick={() => setFormOpen(true)}>
               <Plus size={14} />
               Create habit
             </button>
@@ -279,20 +308,14 @@ export default function Habits() {
                 </div>
 
                 <div className="hidden sm:flex items-center gap-4 text-sm">
-                  <div
-                    className="flex items-center gap-1"
-                    title="Current streak"
-                  >
+                  <div className="flex items-center gap-1" title="Current streak">
                     <Flame
                       size={14}
                       className={current > 0 ? "text-orange-500" : "text-faint"}
                     />
                     <span className="font-medium">{current}</span>
                   </div>
-                  <div
-                    className="flex items-center gap-1"
-                    title="Longest streak"
-                  >
+                  <div className="flex items-center gap-1" title="Longest streak">
                     <Trophy size={14} className="text-amber-500" />
                     <span className="font-medium">{longest}</span>
                   </div>
@@ -317,11 +340,7 @@ export default function Habits() {
                     onClick={() => archive(h)}
                     title={h.isArchived ? "Unarchive" : "Archive"}
                   >
-                    {h.isArchived ? (
-                      <ArchiveRestore size={16} />
-                    ) : (
-                      <Archive size={16} />
-                    )}
+                    {h.isArchived ? <ArchiveRestore size={16} /> : <Archive size={16} />}
                   </button>
                   <button
                     className="btn-ghost p-2 text-rose-500 hover:bg-rose-500/10 hover:text-rose-400"
@@ -363,14 +382,11 @@ export default function Habits() {
         maxWidth="max-w-sm"
       >
         <p className="text-sm text-soft">
-          This will permanently delete <b>{deleteTarget?.name}</b> and all its
-          history. This can't be undone.
+          This will permanently delete <b>{deleteTarget?.name}</b> and all its history.
+          This can't be undone.
         </p>
         <div className="flex justify-end gap-2 mt-5">
-          <button
-            className="btn-secondary"
-            onClick={() => setDeleteTarget(null)}
-          >
+          <button className="btn-secondary" onClick={() => setDeleteTarget(null)}>
             Cancel
           </button>
           <button

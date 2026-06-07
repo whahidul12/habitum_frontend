@@ -225,7 +225,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
             Hey {user?.name?.split(" ")[0]} 👋
@@ -241,7 +241,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-2">
           <button className="btn-secondary" onClick={() => setSuggestOpen(true)}>
             <Sparkles size={14} />
-            <span className="hidden sm:inline">Suggest a habit</span>
+            <span>Suggestion</span>
           </button>
           <button
             className="btn-primary"

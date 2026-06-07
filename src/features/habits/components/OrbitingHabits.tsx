@@ -45,9 +45,9 @@ const HABITS: HabitIcon[] = [
 ];
 
 const ORBITS = {
-  outer: { inset: "0%", duration: 32, planet: 52 },
-  middle: { inset: "18%", duration: 24, planet: 46 },
-  inner: { inset: "36%", duration: 18, planet: 40 },
+  outer: { inset: "0%", duration: 32, planet: 40 },
+  middle: { inset: "15%", duration: 24, planet: 40 },
+  inner: { inset: "30%", duration: 18, planet: 40 },
 };
 
 interface Star {
@@ -87,7 +87,7 @@ export default function OrbitingHabits() {
     : "radial-gradient(circle, rgba(251,191,36,0.22), transparent 70%)";
 
   return (
-    <div className="relative mx-auto w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[460px] lg:h-[460px]">
+    <div className="relative mx-auto w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[460px] lg:h-[460px]">
       {/* twinkling stars */}
       {STARS.map((s, i) => (
         <span

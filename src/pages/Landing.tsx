@@ -53,11 +53,7 @@ export default function Landing() {
           <span className="font-semibold text-lg">Habitum</span>
         </div>
         <nav className="flex items-center gap-2">
-          <button
-            onClick={toggle}
-            className="btn-ghost p-2.5"
-            aria-label="Toggle theme"
-          >
+          <button onClick={toggle} className="btn-ghost p-2.5" aria-label="Toggle theme">
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <Link to="/login" className="btn-ghost">
@@ -86,8 +82,8 @@ export default function Landing() {
               .
             </h1>
             <p className="mt-5 text-soft text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Track your habits, watch your streaks grow, and let AI turn your
-              data into real encouragement — not generic motivation.
+              Track your habits, watch your streaks grow, and let AI turn your data into
+              real encouragement — not generic motivation.
             </p>
             <div className="mt-8 flex items-center justify-center lg:justify-start gap-3">
               <Link to="/register" className="btn-primary px-5 py-3 text-base">
@@ -158,10 +154,10 @@ export default function Landing() {
                 AI Weekly Report
               </div>
               <p className="text-sm leading-relaxed">
-                Big week for hydration — 7/7 on <b>Drink 2L water</b>! Your
-                morning runs slipped to 3/5 on weekdays. Consistency pattern:
-                you're strongest Mon–Wed. Try prepping shoes by the door tonight
-                to protect tomorrow's momentum. Proud of you.
+                Big week for hydration — 7/7 on <b>Drink 2L water</b>! Your morning runs
+                slipped to 3/5 on weekdays. Consistency pattern: you're strongest Mon–Wed.
+                Try prepping shoes by the door tonight to protect tomorrow's momentum.
+                Proud of you.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
                 {[
@@ -186,8 +182,7 @@ export default function Landing() {
             Everything you need, nothing you don't
           </h2>
           <p className="mt-3 text-soft">
-            Clean tracking, deep stats, and AI features that understand your
-            actual data.
+            Clean tracking, deep stats, and AI features that understand your actual data.
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -197,9 +192,7 @@ export default function Landing() {
                 <f.icon size={18} />
               </div>
               <div className="font-medium">{f.title}</div>
-              <div className="text-sm text-soft mt-1 leading-relaxed">
-                {f.desc}
-              </div>
+              <div className="text-sm text-soft mt-1 leading-relaxed">{f.desc}</div>
             </div>
           ))}
         </div>
@@ -224,8 +217,7 @@ export default function Landing() {
               Your first streak is 3 clicks away.
             </h2>
             <p className="mt-3 text-brand-100 max-w-lg mx-auto">
-              Create your account, add a habit, check it off. That's the whole
-              onboarding.
+              Create your account, add a habit, check it off. That's the whole onboarding.
             </p>
             <Link
               to="/register"
