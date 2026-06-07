@@ -3,7 +3,7 @@
 > **AI-Powered Habit Tracking Platform | React + TypeScript + Vite**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue.svg)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.3-61DAFB.svg)](https://reactjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.5-61DAFB.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.0-646CFF.svg)](https://vitejs.dev/)
 
 ---
