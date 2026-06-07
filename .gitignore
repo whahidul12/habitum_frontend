@@ -67,3 +67,4 @@ test-results/
 .eslintcache
 .prettiercache
 .stylelintcache
+.vercel
